@@ -1,0 +1,12 @@
+C:\Vivek\Project\EIAServer\Contracts\bin\Debug\netcoreapp2.0\Contracts.deps.json
+C:\Vivek\Project\EIAServer\Contracts\bin\Debug\netcoreapp2.0\Contracts.dll
+C:\Vivek\Project\EIAServer\Contracts\bin\Debug\netcoreapp2.0\Contracts.pdb
+C:\Vivek\Project\EIAServer\Contracts\obj\Debug\netcoreapp2.0\Contracts.csprojAssemblyReference.cache
+C:\Vivek\Project\EIAServer\Contracts\obj\Debug\netcoreapp2.0\Contracts.csproj.CoreCompileInputs.cache
+C:\Vivek\Project\EIAServer\Contracts\obj\Debug\netcoreapp2.0\Contracts.AssemblyInfoInputs.cache
+C:\Vivek\Project\EIAServer\Contracts\obj\Debug\netcoreapp2.0\Contracts.AssemblyInfo.cs
+C:\Vivek\Project\EIAServer\Contracts\obj\Debug\netcoreapp2.0\Contracts.dll
+C:\Vivek\Project\EIAServer\Contracts\obj\Debug\netcoreapp2.0\Contracts.pdb
+C:\Vivek\Project\EIAServer\Contracts\bin\Debug\netcoreapp2.0\Entities.dll
+C:\Vivek\Project\EIAServer\Contracts\bin\Debug\netcoreapp2.0\Entities.pdb
+C:\Vivek\Project\EIAServer\Contracts\obj\Debug\netcoreapp2.0\Contracts.csproj.CopyComplete

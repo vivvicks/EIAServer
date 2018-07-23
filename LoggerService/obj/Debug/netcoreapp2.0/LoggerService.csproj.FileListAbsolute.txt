@@ -1,0 +1,14 @@
+C:\Vivek\Project\EIAServer\LoggerService\bin\Debug\netcoreapp2.0\LoggerService.deps.json
+C:\Vivek\Project\EIAServer\LoggerService\bin\Debug\netcoreapp2.0\LoggerService.dll
+C:\Vivek\Project\EIAServer\LoggerService\bin\Debug\netcoreapp2.0\LoggerService.pdb
+C:\Vivek\Project\EIAServer\LoggerService\obj\Debug\netcoreapp2.0\LoggerService.csprojAssemblyReference.cache
+C:\Vivek\Project\EIAServer\LoggerService\obj\Debug\netcoreapp2.0\LoggerService.csproj.CoreCompileInputs.cache
+C:\Vivek\Project\EIAServer\LoggerService\obj\Debug\netcoreapp2.0\LoggerService.AssemblyInfoInputs.cache
+C:\Vivek\Project\EIAServer\LoggerService\obj\Debug\netcoreapp2.0\LoggerService.AssemblyInfo.cs
+C:\Vivek\Project\EIAServer\LoggerService\obj\Debug\netcoreapp2.0\LoggerService.dll
+C:\Vivek\Project\EIAServer\LoggerService\obj\Debug\netcoreapp2.0\LoggerService.pdb
+C:\Vivek\Project\EIAServer\LoggerService\bin\Debug\netcoreapp2.0\Contracts.dll
+C:\Vivek\Project\EIAServer\LoggerService\bin\Debug\netcoreapp2.0\Contracts.pdb
+C:\Vivek\Project\EIAServer\LoggerService\obj\Debug\netcoreapp2.0\LoggerService.csproj.CopyComplete
+C:\Vivek\Project\EIAServer\LoggerService\bin\Debug\netcoreapp2.0\Entities.dll
+C:\Vivek\Project\EIAServer\LoggerService\bin\Debug\netcoreapp2.0\Entities.pdb
