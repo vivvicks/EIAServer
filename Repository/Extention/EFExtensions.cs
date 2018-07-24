@@ -286,7 +286,7 @@ namespace Repository.Extention
             }
         }
 
-        public static IList<T> ExecuteStoredProc<T>(this DbCommand command)
+        public static async Task<IList<T>> ExecuteStoredProc<T>(this DbCommand command)
         {
             using (command)
             {
@@ -296,7 +296,7 @@ namespace Repository.Extention
                 {
                     using (var reader = command.ExecuteReader())
                     {
-                        return reader.MapToLst<T>();
+                        return await Task.Run(() => reader.MapToLst<T>());
                     }
                 }
                 finally

@@ -17,19 +17,17 @@ namespace Repository
         }
 
 
-        public IList<VSECGetPasswordByUserName> GetPassword(string LoginId, string IPAddress, string WebsessionID, string Mode)
+        public async Task<IList<VSECGetPasswordByUserName>> GetPassword(string LoginId, string IPAddress, string WebsessionID, string Mode)
         {
-            IList<VSECGetPasswordByUserName> someTypeList = new List<VSECGetPasswordByUserName>();
             using (var context = new EIA_DEVContext())
             {
-                someTypeList = context.LoadStoredProc("proc_VSECGetPasswordByUserName")
+                return await Task.FromResult((IList<VSECGetPasswordByUserName>)context.LoadStoredProc("proc_VSECGetPasswordByUserName")
                      .WithSqlParam("@LoginID", LoginId)
                      .WithSqlParam("@IpAddress", IPAddress)
                      .WithSqlParam("@WebSessionID", WebsessionID)
                      .WithSqlParam("@Mode", Mode)
-                     .ExecuteStoredProc<VSECGetPasswordByUserName>(); 
+                     .ExecuteStoredProc<VSECGetPasswordByUserName>()); 
             }
-            return someTypeList;
         }
     }
 }
