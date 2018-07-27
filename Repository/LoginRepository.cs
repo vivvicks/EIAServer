@@ -9,25 +9,24 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class LoginRepository : ILoginRepository
+    public class LoginRepository : RepositoryBase<VSECGetPasswordByUserName>, ILoginRepository
     {
 
-        public LoginRepository(EIA_DEVContext eIA_DEVContext)
+        public LoginRepository(EIA_DEVContext eIA_DEVContext) : base(eIA_DEVContext)
         {
         }
 
 
-        public async Task<IList<VSECGetPasswordByUserName>> GetPassword(string LoginId, string IPAddress, string WebsessionID, string Mode)
+        public IList<result> GetPassword(VSECGetPasswordByUserName vsecGetPasswordByUserName)
         {
-            using (var context = new EIA_DEVContext())
-            {
-                return await Task.FromResult((IList<VSECGetPasswordByUserName>)context.LoadStoredProc("proc_VSECGetPasswordByUserName")
-                     .WithSqlParam("@LoginID", LoginId)
-                     .WithSqlParam("@IpAddress", IPAddress)
-                     .WithSqlParam("@WebSessionID", WebsessionID)
-                     .WithSqlParam("@Mode", Mode)
-                     .ExecuteStoredProc<VSECGetPasswordByUserName>()); 
-            }
+            
+            return   EIA_DEVContext.LoadStoredProc("proc_VSECGetPasswordByUserName")
+                    .WithSqlParam("@LoginID", vsecGetPasswordByUserName.LoginId)
+                    .WithSqlParam("@IpAddress", vsecGetPasswordByUserName.IPAddress)
+                    .WithSqlParam("@WebSessionID", vsecGetPasswordByUserName.WebsessionID)
+                    .WithSqlParam("@Mode", vsecGetPasswordByUserName.Mode)
+                    .ExecuteStoredProc<result>(); 
+            
         }
     }
 }

@@ -8,6 +8,6 @@ namespace Contracts
 {
     public interface ILoginRepository
     {
-        Task<IList<VSECGetPasswordByUserName>> GetPassword(string LoginId,string IPAddress,string WebsessionID, string Mode);
+        IList<result> GetPassword(VSECGetPasswordByUserName vsecGetPasswordByUserName);
     }
 }

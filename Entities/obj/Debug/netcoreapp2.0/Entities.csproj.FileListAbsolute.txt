@@ -1,4 +1,6 @@
 C:\Vivek\Project\EIAServer\Entities\bin\Debug\netcoreapp2.0\Entities.deps.json
+C:\Vivek\Project\EIAServer\Entities\bin\Debug\netcoreapp2.0\Entities.runtimeconfig.json
+C:\Vivek\Project\EIAServer\Entities\bin\Debug\netcoreapp2.0\Entities.runtimeconfig.dev.json
 C:\Vivek\Project\EIAServer\Entities\bin\Debug\netcoreapp2.0\Entities.dll
 C:\Vivek\Project\EIAServer\Entities\bin\Debug\netcoreapp2.0\Entities.pdb
 C:\Vivek\Project\EIAServer\Entities\obj\Debug\netcoreapp2.0\Entities.csprojAssemblyReference.cache
@@ -7,5 +9,3 @@ C:\Vivek\Project\EIAServer\Entities\obj\Debug\netcoreapp2.0\Entities.AssemblyInf
 C:\Vivek\Project\EIAServer\Entities\obj\Debug\netcoreapp2.0\Entities.AssemblyInfo.cs
 C:\Vivek\Project\EIAServer\Entities\obj\Debug\netcoreapp2.0\Entities.dll
 C:\Vivek\Project\EIAServer\Entities\obj\Debug\netcoreapp2.0\Entities.pdb
-C:\Vivek\Project\EIAServer\Entities\bin\Debug\netcoreapp2.0\Entities.runtimeconfig.json
-C:\Vivek\Project\EIAServer\Entities\bin\Debug\netcoreapp2.0\Entities.runtimeconfig.dev.json

@@ -36,6 +36,8 @@ namespace EIAServer
 
             services.ConfigureMySqlContext(Configuration);
 
+            services.ConfigureRepositoryWrapper();
+
             services.AddMvc();
         }
 

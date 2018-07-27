@@ -174,6 +174,11 @@ namespace Entities.Models
         // Unable to generate entity type for table 'dbo.SEQ_EMPMASTER'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.IMP_GatePassDtl_Hst'. Please see the warning messages.
 
+        public EIA_DEVContext(DbContextOptions<EIA_DEVContext> options) : base(options)
+        {
+
+        }
+     
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AccInvoice>(entity =>
