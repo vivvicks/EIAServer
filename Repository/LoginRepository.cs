@@ -28,5 +28,16 @@ namespace Repository
                     .ExecuteStoredProc<result>(); 
             
         }
+
+        public IList<VSECVerifyUser_Result> ValidateUser(VSECGetPasswordByUserName vsecGetPasswordByUserName)
+        {
+            return EIA_DEVContext.LoadStoredProc("proc_VSECVerifyUser")
+                    .WithSqlParam("@LoginID", vsecGetPasswordByUserName.LoginId)
+                    .WithSqlParam("@password",vsecGetPasswordByUserName.Password)
+                    .WithSqlParam("@IpAddress", vsecGetPasswordByUserName.IPAddress)
+                    .WithSqlParam("@WebSessionID", vsecGetPasswordByUserName.WebsessionID)
+                    .WithSqlParam("@CultureID", DBNull.Value)
+                    .ExecuteStoredProc<VSECVerifyUser_Result>();
+        }
     }
 }

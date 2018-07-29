@@ -9,5 +9,6 @@ namespace Contracts
     public interface ILoginRepository
     {
         IList<result> GetPassword(VSECGetPasswordByUserName vsecGetPasswordByUserName);
+        IList<VSECVerifyUser_Result> ValidateUser(VSECGetPasswordByUserName vsecGetPasswordByUserName);
     }
 }

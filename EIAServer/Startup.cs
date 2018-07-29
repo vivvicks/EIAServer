@@ -38,6 +38,8 @@ namespace EIAServer
 
             services.ConfigureRepositoryWrapper();
 
+            services.ConfigureJwt();
+
             services.AddMvc();
         }
 
@@ -69,7 +71,7 @@ namespace EIAServer
             });
 
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

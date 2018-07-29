@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +10,7 @@ using Contracts;
 using Entities.StoreProcResults;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EIAServer.Controllers
 {
@@ -35,8 +38,9 @@ namespace EIAServer.Controllers
             try
             {
                 ASCIIEncoding encoding = new ASCIIEncoding();
+
                 IList<result> Password = _repository.login.GetPassword(vsecGetPasswordByUserName);
-                if(Password?.Any()??false)
+                if (Password?.Any()??false)
                 {
                     string inputPwd = vsecGetPasswordByUserName.Password;
                     string dbPwd = Password[0].Password;
@@ -46,14 +50,47 @@ namespace EIAServer.Controllers
 
                     if(md5Pwd.ToUpper() == inputPwd.ToUpper())
                     {
+                        vsecGetPasswordByUserName.Password = dbPwd;
+                        IList<VSECVerifyUser_Result> userInfo = _repository.login.ValidateUser(vsecGetPasswordByUserName);
+                        if (userInfo.Any(c => c.ValidUser == "Y"))
+                        {
+                            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
 
+                            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+                            var claims = new List<Claim>
+                                {
+                                    new Claim(ClaimTypes.Name, vsecGetPasswordByUserName.LoginId),
+                                    new Claim(ClaimTypes.Role, "Admin")
+                                };
+
+                            var tokeOptions = new JwtSecurityToken(
+                                issuer: "http://localhost:5000",
+                                audience: "http://localhost:5000",
+                                claims: claims,
+                                expires: DateTime.Now.AddMinutes(5),
+                                signingCredentials: signinCredentials
+                            );
+
+                            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+
+                            return Ok(new { UserInfo = userInfo, TokenString = tokenString });
+                        }
+                        else
+                        {
+                            return Unauthorized();
+                        }
+                    }
+                    else
+                    {
+                        return Unauthorized();
                     }
 
                 }
-
-                          
-
-                return Ok(Password);
+                else
+                {
+                    return Unauthorized();
+                }
             }
             catch (Exception ex)
             {
@@ -66,12 +103,12 @@ namespace EIAServer.Controllers
         {
             MD5 algorithm = MD5.Create();
             byte[] data = algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
-            string sh1 = "";
+            string md5 = "";
             for (int i = 0; i < data.Length; i++)
             {
-                sh1 += data[i].ToString("x2").ToUpperInvariant();
+                md5 += data[i].ToString("x2").ToUpperInvariant();
             }
-            return sh1;
+            return md5;
         }
     }
 }
