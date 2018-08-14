@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "LoggerServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{E5D5D0AC-DEEA-493E-9652-6CDE56396474}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{B59F2A36-A2BC-4104-8FE1-492B63B333DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{B59F2A36-A2BC-4104-8FE1-492B63B333DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EIAServer-tests", "EIAServer-tests\EIAServer-tests.csproj", "{904CBF11-C076-459D-98AE-1316F0E6BF21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{B59F2A36-A2BC-4104-8FE1-492B63B333DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B59F2A36-A2BC-4104-8FE1-492B63B333DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B59F2A36-A2BC-4104-8FE1-492B63B333DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{904CBF11-C076-459D-98AE-1316F0E6BF21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{904CBF11-C076-459D-98AE-1316F0E6BF21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{904CBF11-C076-459D-98AE-1316F0E6BF21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{904CBF11-C076-459D-98AE-1316F0E6BF21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

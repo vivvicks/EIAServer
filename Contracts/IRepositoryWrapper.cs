@@ -7,5 +7,6 @@ namespace Contracts
     public interface IRepositoryWrapper
     {
         ILoginRepository login { get; }
+        ICommonMasterRepository commonMasterRepository { get; }
     }
 }

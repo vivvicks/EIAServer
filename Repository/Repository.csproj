@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="CommonMasterRepository.cs~RF8454f4.TMP" />
     <None Remove="LoginRepository.cs~RF1ee40e47.TMP" />
   </ItemGroup>
 
