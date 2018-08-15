@@ -17,13 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Contracts\Contracts.csproj" />
+    <ProjectReference Include="..\EIAServer\EIAServer.csproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="EIAServer">
-      <HintPath>..\EIAServer\bin\Debug\netcoreapp2.1\EIAServer.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
