@@ -1,5 +1,7 @@
 ﻿using Contracts;
+using Entities;
 using Entities.Models;
+using Entities.ViewModels;
 using LoggerService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -43,15 +45,17 @@ namespace EIAServer.Extensions
             services.AddSingleton<ILoggerManager, LoggerManager>();
         }
 
-        public static void ConfigureMySqlContext(this IServiceCollection services, IConfiguration config)
+        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
         {
             var connectionString = config["mssqlconnection:connectionString"];
-            services.AddDbContext<EIA_DEVContext>(o => o.UseSqlServer(connectionString));
+            services.AddDbContext<EIA_DEVContext>(o => o.UseSqlServer(connectionString))
+                    .AddDbContext<EIA_DEVContext_View>(o => o.UseSqlServer(connectionString));
         }
 
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddScoped<IRepositoryViewWrapper, RepositoryViewWrapper>();
         }
 
         public static void ConfigureJwt(this IServiceCollection services)

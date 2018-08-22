@@ -1,5 +1,7 @@
 ﻿using Contracts;
+using Entities;
 using Entities.Models;
+using Entities.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,16 @@ namespace Repository
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         protected EIA_DEVContext EIA_DEVContext { get; set; }
+        protected EIA_DEVContext_View EIA_DEVContext_View { get; set; }
 
         public RepositoryBase(EIA_DEVContext eia_devContext)
         {
             this.EIA_DEVContext = eia_devContext;
+        }
+
+        public RepositoryBase(EIA_DEVContext_View eia_devContext_view)
+        {
+            this.EIA_DEVContext_View = eia_devContext_view;
         }
 
         public async Task<IEnumerable<T>> FindAllAsync()
@@ -46,6 +54,16 @@ namespace Repository
         public async Task SaveAsync()
         {
             await this.EIA_DEVContext.SaveChangesAsync();
-        }    
+        }
+
+        public async Task<IEnumerable<T>> FindAllAsyncView()
+        {
+            return await this.EIA_DEVContext_View.Set<T>().ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> FindByConditionAyncView(Expression<Func<T, bool>> expression)
+        {
+            return await this.EIA_DEVContext_View.Set<T>().Where(expression).ToListAsync();
+        }
     }
 }

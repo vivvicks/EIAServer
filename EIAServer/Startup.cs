@@ -34,7 +34,7 @@ namespace EIAServer
 
             services.ConfigureLoggerService();
 
-            services.ConfigureMySqlContext(Configuration);
+            services.ConfigureSqlContext(Configuration);
 
             services.ConfigureRepositoryWrapper();
 

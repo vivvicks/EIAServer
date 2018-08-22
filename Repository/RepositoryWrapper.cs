@@ -1,5 +1,8 @@
 ﻿using Contracts;
+using Contracts.UserManagement;
 using Entities.Models;
+using Entities.ViewModels;
+using Repository.UserManagementRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -42,6 +45,5 @@ namespace Repository
                 return _commonMasterRepository;
             }
         }
-
     }
 }
