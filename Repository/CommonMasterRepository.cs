@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class CommonMasterRepository : RepositoryBase<MCommonMasterMst>, ICommonMasterRepository
+    public class CommonMasterRepository : RepositoryBase<MCommonMasterMst>, ICommonMaster
     {
 
         public CommonMasterRepository(EIA_DEVContext eIA_DEVContext)
@@ -16,7 +16,7 @@ namespace Repository
         {
         }
 
-        public async Task<IEnumerable<MCommonMasterMst>> GetFinaltialYear()
+        public async Task<IEnumerable<MCommonMasterMst>> GetFinantialYear()
         {
             return await FindByConditionAync(Master => Master.MasterType.Equals("FinYear"));
         }

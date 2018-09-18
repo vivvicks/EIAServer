@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Contracts
 {
-    public interface ICommonMasterRepository
+    public interface IMAirlineMST
     {
-        Task<IEnumerable<MCommonMasterMst>> GetFinaltialYear();
+        Task<IEnumerable<MAirlineMst>> GetAirlineList();
     }
 }

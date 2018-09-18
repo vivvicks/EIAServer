@@ -13,7 +13,8 @@ namespace Repository
     {
         private EIA_DEVContext _eIA_DEVContext;
         private ILoginRepository _login;
-        private ICommonMasterRepository _commonMasterRepository;
+        private ICommonMaster _commonMaster;
+        private IMAirlineMST _AirlineMST;
 
         public RepositoryWrapper(EIA_DEVContext eIA_DEVContext)
         {
@@ -33,16 +34,29 @@ namespace Repository
             }
         }
 
-        public ICommonMasterRepository commonMasterRepository
+        public ICommonMaster commonMaster
         {
             get
             {
-                if (_commonMasterRepository == null)
+                if (_commonMaster == null)
                 {
-                    _commonMasterRepository = new CommonMasterRepository(_eIA_DEVContext);
+                    _commonMaster = new CommonMasterRepository(_eIA_DEVContext);
                 }
 
-                return _commonMasterRepository;
+                return _commonMaster;
+            }
+        }
+
+        public IMAirlineMST mAirlineMST
+        {
+            get
+            {
+                if (_AirlineMST == null)
+                {
+                    _AirlineMST = new MAirlineMSTRepository(_eIA_DEVContext);
+                }
+
+                return _AirlineMST;
             }
         }
     }

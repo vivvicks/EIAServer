@@ -22,20 +22,39 @@ namespace EIAServer.Controllers
         }
 
 
-        [HttpGet(), Route("GetFinaltialYear")]
-        public async Task<IActionResult> GetFinaltialYear()
+        [HttpGet(), Route("GetFinantialYear")]
+        public async Task<IActionResult> GetFinantialYear()
         {
             try
             {
-                var FinYear = await _repository.commonMasterRepository.GetFinaltialYear();
+                var FinYear = (from FnYear in (await _repository.commonMaster.GetFinantialYear())
+                              select new { FnYear.MasterValue1, FnYear.MasterDesc }).ToList();
 
                 return Ok(FinYear);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Some error in the GetFinaltialYear method: {ex}");
+                _logger.LogError($"Some error in the GetFinantialYear method: {ex}");
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpGet(), Route("GetAirlineList")]
+        public async Task<IActionResult> GetAirlineList()
+        {
+            try
+            {
+                var airlineMsts = (from airline in (await _repository.mAirlineMST.GetAirlineList())
+                                  select new { airline.AirlineCode,airline.AirlineName }).ToList();
+
+                return Ok(airlineMsts);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Some error in the GetAirlineList method: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }
