@@ -15,6 +15,11 @@ namespace Repository.UserManagementRepository
         {
         }
 
+        public Task<VW_UserDetail> GetUserByID(long UserMstID)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<VW_UserDetail>> GetUserDetails(string TerminalCode)
         {
             return await FindByConditionAyncView(user => user.P1 == TerminalCode);

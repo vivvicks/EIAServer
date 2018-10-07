@@ -9,5 +9,6 @@ namespace Contracts.UserManagement
     public interface IUserCreation
     {
         Task<IEnumerable<VW_UserDetail>> GetUserDetails(string TerminalCode);
+        Task<VW_UserDetail> GetUserByID(long UserMstID);
     }
 }

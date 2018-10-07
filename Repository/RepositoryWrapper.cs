@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Contracts.userManagement;
 using Contracts.UserManagement;
 using Entities.Models;
 using Entities.ViewModels;
@@ -15,10 +16,17 @@ namespace Repository
         private ILoginRepository _login;
         private ICommonMaster _commonMaster;
         private IMAirlineMST _AirlineMST;
+        private IUserCreationCRUD _userCreationCRUD;
+        private IVsecLoginMst _vsecLoginMst;
 
         public RepositoryWrapper(EIA_DEVContext eIA_DEVContext)
         {
             _eIA_DEVContext = eIA_DEVContext;
+        }
+
+        public void Dispose()
+        {
+            _eIA_DEVContext.Dispose();
         }
 
         public ILoginRepository login
@@ -58,6 +66,37 @@ namespace Repository
 
                 return _AirlineMST;
             }
+        }
+
+        public IUserCreationCRUD userCreationCRUD
+        {
+            get
+            {
+                if (_userCreationCRUD == null)
+                {
+                    _userCreationCRUD = new UserCreationCRUD(_eIA_DEVContext);
+                }
+
+                return _userCreationCRUD;
+            }
+        }
+
+        public IVsecLoginMst vsecLoginMst
+        {
+            get
+            {
+                if (_vsecLoginMst == null)
+                {
+                    _vsecLoginMst = new VsecLogMst(_eIA_DEVContext);
+                }
+
+                return _vsecLoginMst;
+            }
+        }
+
+        public IDatabaseTransaction BeginTrainsaction()
+        {
+            return new EntityDatabaseTransaction(_eIA_DEVContext);
         }
     }
 }

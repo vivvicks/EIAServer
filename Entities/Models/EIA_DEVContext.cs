@@ -178,7 +178,7 @@ namespace Entities.Models
         {
 
         }
-     
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AccInvoice>(entity =>
