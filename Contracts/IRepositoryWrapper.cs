@@ -14,5 +14,6 @@ namespace Contracts
         IUserCreationCRUD userCreationCRUD { get; }
         IDatabaseTransaction BeginTrainsaction();
         IVsecLoginMst vsecLoginMst { get; }
+        IRoleCreation roleCreation { get; }
     }
 }

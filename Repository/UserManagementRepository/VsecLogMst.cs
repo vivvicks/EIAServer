@@ -30,5 +30,21 @@ namespace Repository.UserManagementRepository
             Create(vsecLoginMst);
             await SaveAsync();
         }
+
+        public async Task UpdateLogin(VW_UserDetail vw_userdetail)
+        {
+            VsecLoginMst vsecLoginMst = new VsecLoginMst
+            {
+                LoginMid = vw_userdetail.LoginMId,
+                LoginId = vw_userdetail.LoginID,
+                ProfileId = vw_userdetail.ProfileId,
+                ActiveStatus = vw_userdetail.Status,
+                Password = vw_userdetail.RPassword,
+                CreatedBy = vw_userdetail.CreatedBy,
+                CreatedOn = DateTime.Now
+            };
+            Update(vsecLoginMst);
+            await SaveAsync();
+        }
     }
 }

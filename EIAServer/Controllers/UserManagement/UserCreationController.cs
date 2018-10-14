@@ -42,11 +42,12 @@ namespace EIAServer.Controllers.UserManagement
         }
 
         [HttpGet("{id}", Name = "UserById")]
-        public IActionResult GetUserById(Guid id)
+        public async Task<IActionResult> GetUserById(long id)
         {
             try
             {
-                return Ok();
+                var User = await _repository.userCreation.GetUserByID(id);
+                return Ok(User);
             }
             catch (Exception ex)
             {
@@ -74,6 +75,31 @@ namespace EIAServer.Controllers.UserManagement
             {
                 Transaction.Rollback();
                 _logger.LogError($"Something went wrong inside CreateUser action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+            finally
+            {
+                Transaction.Dispose();
+            }
+        }
+
+        [HttpPut()]
+        public async Task<IActionResult> UpdateUser([FromBody]VW_UserDetail vw_UserDetail)
+        {
+            var Transaction = _repo.BeginTrainsaction();
+            try
+            {
+                await _repo.userCreationCRUD.UpdateUser(vw_UserDetail);
+                await _repo.vsecLoginMst.UpdateLogin(vw_UserDetail);
+
+                Transaction.Commit();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Transaction.Rollback();
+                _logger.LogError($"Something went wrong inside UpdateUser action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
             finally

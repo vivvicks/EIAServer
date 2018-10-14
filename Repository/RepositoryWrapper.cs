@@ -18,6 +18,7 @@ namespace Repository
         private IMAirlineMST _AirlineMST;
         private IUserCreationCRUD _userCreationCRUD;
         private IVsecLoginMst _vsecLoginMst;
+        private IRoleCreation _roleCreation;
 
         public RepositoryWrapper(EIA_DEVContext eIA_DEVContext)
         {
@@ -93,6 +94,20 @@ namespace Repository
                 return _vsecLoginMst;
             }
         }
+
+        public IRoleCreation roleCreation
+        {
+            get
+            {
+                if (_roleCreation == null)
+                {
+                    _roleCreation = new vseRoleMst(_eIA_DEVContext);
+                }
+
+                return _roleCreation;
+            }
+        }
+
 
         public IDatabaseTransaction BeginTrainsaction()
         {

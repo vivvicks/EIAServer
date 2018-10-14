@@ -3,6 +3,7 @@ using Entities;
 using Entities.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,9 +16,12 @@ namespace Repository.UserManagementRepository
         {
         }
 
-        public Task<VW_UserDetail> GetUserByID(long UserMstID)
+        public async Task<VW_UserDetail> GetUserByID(long UserMstID)
         {
-            throw new NotImplementedException();
+            var UserDetail = await FindByConditionAyncView(user => user.UserMstID.Equals(UserMstID));
+            return UserDetail.DefaultIfEmpty(new VW_UserDetail()).FirstOrDefault();
+
+
         }
 
         public async Task<IEnumerable<VW_UserDetail>> GetUserDetails(string TerminalCode)

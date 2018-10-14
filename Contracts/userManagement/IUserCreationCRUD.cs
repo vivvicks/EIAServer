@@ -10,5 +10,6 @@ namespace Contracts.userManagement
     {
         Task CreateUser(VW_UserDetail vw_UserDetail);
         Task<long> MaxUserMstID();
+        Task UpdateUser(VW_UserDetail vw_UserDetail);
     }
 }

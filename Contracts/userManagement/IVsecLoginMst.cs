@@ -9,5 +9,6 @@ namespace Contracts.userManagement
     public interface IVsecLoginMst
     {
         Task CreatLogin(VW_UserDetail vw_UserDetail);
+        Task UpdateLogin(VW_UserDetail vw_UserDetail);
     }
 }

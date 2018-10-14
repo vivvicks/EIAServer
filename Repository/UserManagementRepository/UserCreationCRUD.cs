@@ -48,5 +48,31 @@ namespace Repository.UserManagementRepository
         {
             return (await FindAllAsync()).Max(p => p.UserMstId);
         }
+
+        public async Task UpdateUser(VW_UserDetail vw_userdetail)
+        {
+            VsecUserMst vsec_user_mst = new VsecUserMst
+            {
+                UserMstId = vw_userdetail.UserMstID,
+                FirstName = vw_userdetail.FirstName,
+                MiddleName = vw_userdetail.MiddleName,
+                LastName = vw_userdetail.LastName,
+                FatherName = vw_userdetail.FatherName,
+                Dob = vw_userdetail.DOB,
+                Gender = vw_userdetail.Gender,
+                Email = vw_userdetail.Email,
+                Address1 = vw_userdetail.Address1,
+                Address2 = vw_userdetail.Address2,
+                Address3 = vw_userdetail.Address3,
+                ContactNo = vw_userdetail.ContactNo,
+                Status = vw_userdetail.Status,
+                McStatus = vw_userdetail.Status,
+                CreatedBy = vw_userdetail.CreatedBy,
+                CreatedOn = DateTime.Now,
+                P1 = vw_userdetail.P1
+            };
+            Update(vsec_user_mst);
+            await SaveAsync();
+        }
     }
 }
