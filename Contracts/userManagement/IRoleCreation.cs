@@ -9,5 +9,8 @@ namespace Contracts.userManagement
     public interface IRoleCreation
     {
         Task<IEnumerable<VsecRoleMst>> GetRoles();
+        Task CreateRole(VsecRoleMst vsecRoleMst);
+        Task UpdateRole(VsecRoleMst vsecRoleMst);
+        Task<VsecRoleMst> GetRoleByID(int RoleId);
     }
 }

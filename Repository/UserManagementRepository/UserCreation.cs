@@ -20,8 +20,6 @@ namespace Repository.UserManagementRepository
         {
             var UserDetail = await FindByConditionAyncView(user => user.UserMstID.Equals(UserMstID));
             return UserDetail.DefaultIfEmpty(new VW_UserDetail()).FirstOrDefault();
-
-
         }
 
         public async Task<IEnumerable<VW_UserDetail>> GetUserDetails(string TerminalCode)
