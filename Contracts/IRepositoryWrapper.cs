@@ -15,5 +15,6 @@ namespace Contracts
         IDatabaseTransaction BeginTrainsaction();
         IVsecLoginMst vsecLoginMst { get; }
         IRoleCreation roleCreation { get; }
+        IVsecUserRoleMap vsecUserRoleMap { get; }
     }
 }

@@ -19,6 +19,7 @@ namespace Repository
         private IUserCreationCRUD _userCreationCRUD;
         private IVsecLoginMst _vsecLoginMst;
         private IRoleCreation _roleCreation;
+        private IVsecUserRoleMap _vsecUserRoleMap;
 
         public RepositoryWrapper(EIA_DEVContext eIA_DEVContext)
         {
@@ -105,6 +106,19 @@ namespace Repository
                 }
 
                 return _roleCreation;
+            }
+        }
+
+        public IVsecUserRoleMap vsecUserRoleMap
+        {
+            get
+            {
+                if (_vsecUserRoleMap == null)
+                {
+                    _vsecUserRoleMap = new VsecUserRoleMapRepository(_eIA_DEVContext);
+                }
+
+                return _vsecUserRoleMap;
             }
         }
 
