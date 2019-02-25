@@ -56,5 +56,38 @@ namespace EIAServer.Controllers
             }
         }
 
+        [HttpGet(), Route("GetCourierType")]
+        public async Task<IActionResult> GetCourierType()
+        {
+            try
+            {
+                var CourierTypes = (from courierType in (await _repository.commonMaster.GetCourierType())
+                                   select new { courierType.MasterId, courierType.MasterDesc }).ToList();
+
+                return Ok(CourierTypes);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Some error in the GetCourierType method: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet(), Route("GetMemberType")]
+        public async Task<IActionResult> GetMemberType()
+        {
+            try
+            {
+                var MemberTypes = (from MemberType in (await _repository.commonMaster.GetMemberType())
+                                   select new { MemberType.MasterId, MemberType.MasterDesc }).ToList();
+
+                return Ok(MemberTypes);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Some error in the GetMemberType method: {ex}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }

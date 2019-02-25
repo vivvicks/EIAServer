@@ -9,5 +9,7 @@ namespace Contracts
     public interface ICommonMaster
     {
         Task<IEnumerable<MCommonMasterMst>> GetFinantialYear();
+        Task<IEnumerable<MCommonMasterMst>> GetCourierType();
+        Task<IEnumerable<MCommonMasterMst>> GetMemberType();
     }
 }

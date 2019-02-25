@@ -23,6 +23,13 @@ namespace Entities.ViewModels
                 entity.ToTable("VW_UserDetail");
 
             });
+
+            modelBuilder.Entity<VWEDT_COURIERMST>(entity =>
+            {
+                entity.HasKey(e => e.CourierCoId);
+                entity.ToTable("vwedt_couriermst");
+
+            });
         }
     }
 }

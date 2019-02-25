@@ -1,6 +1,8 @@
 ﻿using Contracts;
+using Contracts.Masters;
 using Contracts.UserManagement;
 using Entities.ViewModels;
+using Repository.Masters;
 using Repository.UserManagementRepository;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ namespace Repository
     {
         private EIA_DEVContext_View _eIA_DEVContext_view;
         private IUserCreation _userCreation;
+        private IcourierMst _courierMst;
 
         public RepositoryViewWrapper(EIA_DEVContext_View eIA_DEVContext_view)
         {
@@ -28,6 +31,19 @@ namespace Repository
                 }
 
                 return _userCreation;
+            }
+        }
+
+        public IcourierMst courierMst
+        {
+            get
+            {
+                if (_courierMst == null)
+                {
+                    _courierMst = new CourierDetails(_eIA_DEVContext_view);
+                }
+
+                return _courierMst;
             }
         }
     }

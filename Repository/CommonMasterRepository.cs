@@ -16,9 +16,19 @@ namespace Repository
         {
         }
 
+        public async Task<IEnumerable<MCommonMasterMst>> GetCourierType()
+        {
+            return await FindByConditionAync(Master => Master.MasterType.Equals("CourierType"));
+        }
+
         public async Task<IEnumerable<MCommonMasterMst>> GetFinantialYear()
         {
             return await FindByConditionAync(Master => Master.MasterType.Equals("FinYear"));
+        }
+
+        public async Task<IEnumerable<MCommonMasterMst>> GetMemberType()
+        {
+            return await FindByConditionAync(Master => Master.MasterType.Equals("MemberType"));
         }
     }
 }
