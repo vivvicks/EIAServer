@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Contracts;
 using Entities.StoreProcResults;
+using LoggerService.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -29,73 +30,60 @@ namespace EIAServer.Controllers
         [HttpPost(), Route("login")]
         public IActionResult Login([FromBody]VSECGetPasswordByUserName vsecGetPasswordByUserName)
         {
+                     
+            ASCIIEncoding encoding = new ASCIIEncoding();
 
-            if (vsecGetPasswordByUserName == null)
+            IList<result> Password = _repository.login.GetPassword(vsecGetPasswordByUserName);
+            if (Password?.Any()??false)
             {
-                return BadRequest("Invalid client request");
-            }
-            
-            try
-            {
-                ASCIIEncoding encoding = new ASCIIEncoding();
+                string inputPwd = vsecGetPasswordByUserName.Password;
+                string dbPwd = Password[0].Password;
+                string convertedPwd = dbPwd + Convert.ToString(vsecGetPasswordByUserName.RandomNumber);
 
-                IList<result> Password = _repository.login.GetPassword(vsecGetPasswordByUserName);
-                if (Password?.Any()??false)
+                string md5Pwd = HashString(convertedPwd);
+
+                if(md5Pwd.ToUpper() == inputPwd.ToUpper())
                 {
-                    string inputPwd = vsecGetPasswordByUserName.Password;
-                    string dbPwd = Password[0].Password;
-                    string convertedPwd = dbPwd + Convert.ToString(vsecGetPasswordByUserName.RandomNumber);
-
-                    string md5Pwd = HashString(convertedPwd);
-
-                    if(md5Pwd.ToUpper() == inputPwd.ToUpper())
+                    vsecGetPasswordByUserName.Password = dbPwd;
+                    IList<VSECVerifyUser_Result> userInfo = _repository.login.ValidateUser(vsecGetPasswordByUserName);
+                    if (userInfo.Any(c => c.ValidUser == "Y"))
                     {
-                        vsecGetPasswordByUserName.Password = dbPwd;
-                        IList<VSECVerifyUser_Result> userInfo = _repository.login.ValidateUser(vsecGetPasswordByUserName);
-                        if (userInfo.Any(c => c.ValidUser == "Y"))
-                        {
-                            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+                        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
 
-                            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+                        var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
-                            var claims = new List<Claim>
-                                {
-                                    new Claim(ClaimTypes.Name, vsecGetPasswordByUserName.LoginId),
-                                    new Claim(ClaimTypes.Role, "Admin")
-                                };
+                        var claims = new List<Claim>
+                            {
+                                new Claim(ClaimTypes.Name, vsecGetPasswordByUserName.LoginId),
+                                new Claim(ClaimTypes.Role, "Admin")
+                            };
 
-                            var tokeOptions = new JwtSecurityToken(
-                                issuer: "http://localhost:5000",
-                                audience: "http://localhost:5000",
-                                claims: claims,
-                                expires: DateTime.Now.AddMinutes(5),
-                                signingCredentials: signinCredentials
-                            );
+                        var tokeOptions = new JwtSecurityToken(
+                            issuer: "http://localhost:5000",
+                            audience: "http://localhost:5000",
+                            claims: claims,
+                            expires: DateTime.Now.AddMinutes(5),
+                            signingCredentials: signinCredentials
+                        );
 
-                            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+                        var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
 
-                            return Ok(new { UserInfo = userInfo, TokenString = tokenString });
-                        }
-                        else
-                        {
-                            return Unauthorized();
-                        }
+                        return Ok(new { UserInfo = userInfo, TokenString = tokenString });
                     }
                     else
                     {
-                        return Unauthorized();
+                        throw new HttpStatusCodeException(StatusCodes.Status401Unauthorized, @"User not valid");
                     }
-
                 }
                 else
                 {
-                    return Unauthorized();
+                    throw new HttpStatusCodeException(StatusCodes.Status401Unauthorized, @"User name or password is incorrect");
                 }
+
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogError($"Some error in the Login method: {ex}");
-                return StatusCode(500, "Internal server error");
+                throw new HttpStatusCodeException(StatusCodes.Status401Unauthorized, @"password is incorrect");
             }
         }
 

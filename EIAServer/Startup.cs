@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Contracts;
+using EIAServer.CustomExceptionMiddleware;
 using EIAServer.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,11 +46,17 @@ namespace EIAServer
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerManager logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseHttpStatusCodeExceptionMiddleware();
+            }
+            else
+            {
+                app.UseHttpStatusCodeExceptionMiddleware();
+                app.UseExceptionHandler();
             }
 
             app.UseCors("CorsPolicy");
@@ -69,7 +77,7 @@ namespace EIAServer
                     await next();
                 }
             });
-
+            
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc();

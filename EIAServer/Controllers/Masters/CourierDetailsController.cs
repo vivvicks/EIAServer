@@ -27,17 +27,8 @@ namespace EIAServer.Controllers.Masters
         [HttpGet(), Route("GetAllCouriers")]
         public async Task<IActionResult> GetAllCouriers([FromQuery]VWEDT_COURIERMST vWEDT_COURIERMST)
         {
-            try
-            {
-                var users = await _repository.courierMst.GetCourierDetails(vWEDT_COURIERMST);
-
-                return Ok(users);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Some error in the GetAllCouriers method: {ex}");
-                return StatusCode(500, "Internal server error");
-            }
+            var users = await _repository.courierMst.GetCourierDetails(vWEDT_COURIERMST);
+            return Ok(users);
         }
     }
 }

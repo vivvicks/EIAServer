@@ -20,6 +20,7 @@ namespace Repository
         private IVsecLoginMst _vsecLoginMst;
         private IRoleCreation _roleCreation;
         private IVsecUserRoleMap _vsecUserRoleMap;
+        private IMFlightmasterMST _mFlightmasterMST;
 
         public RepositoryWrapper(EIA_DEVContext eIA_DEVContext)
         {
@@ -122,6 +123,18 @@ namespace Repository
             }
         }
 
+        public IMFlightmasterMST mFlightmasterMst
+        {
+            get
+            {
+                if (_mFlightmasterMST == null)
+                {
+                    _mFlightmasterMST = new MFlightmasterMSTRepository(_eIA_DEVContext);
+                }
+
+                return _mFlightmasterMST;
+            }
+        }
 
         public IDatabaseTransaction BeginTrainsaction()
         {

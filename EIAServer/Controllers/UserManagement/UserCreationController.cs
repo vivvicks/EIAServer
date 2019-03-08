@@ -28,32 +28,15 @@ namespace EIAServer.Controllers.UserManagement
         [HttpGet(), Route("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers(string TerminalCode)
         {
-            try
-            {
-                var users = await _repository.userCreation.GetUserDetails(TerminalCode);
-
-                return Ok(users);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Some error in the GetAllOwners method: {ex}");
-                return StatusCode(500, "Internal server error");
-            }
+            var users = await _repository.userCreation.GetUserDetails(TerminalCode);
+            return Ok(users);
         }
 
         [HttpGet("{id}", Name = "UserById")]
         public async Task<IActionResult> GetUserById(long id)
         {
-            try
-            {
                 var User = await _repository.userCreation.GetUserByID(id);
                 return Ok(User);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong inside GetUserById action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
-            }
         }
 
 

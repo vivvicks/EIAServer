@@ -27,58 +27,41 @@ namespace EIAServer.Controllers.UserManagement
         [HttpGet(), Route("GetRoleMapUsers")]
         public async Task<IActionResult> GetRoleMapUsers(int roleID, string Status, string TerminalCode)
         {
-            try
+            
+            var usesDetails = await _repository.userCreation.GetUserDetails(TerminalCode);
+
+            if (Status == "Allocated")
             {
+                var mappedRoles = await _repo.vsecUserRoleMap.GetUsersByRoleID(roleID);
 
-                var usesDetails = await _repository.userCreation.GetUserDetails(TerminalCode);
+                var RolMappedList = (from MapRoles in mappedRoles
+                                        join users in usesDetails on MapRoles.LoginMid equals users.LoginMId
+                                        where MapRoles.RoleId == roleID
+                                        select users
+                                        ).ToList();
 
-
-                if (Status == "Allocated")
-                {
-                    var mappedRoles = await _repo.vsecUserRoleMap.GetUsersByRoleID(roleID);
-
-                    var RolMappedList = (from MapRoles in mappedRoles
-                                         join users in usesDetails on MapRoles.LoginMid equals users.LoginMId
-                                         where MapRoles.RoleId == roleID
-                                         select users
-                                         ).ToList();
-
-                    return Ok(RolMappedList);
-                }
-                else if (Status == "Available")
-                {
-                    var mappedRoles = await _repo.vsecUserRoleMap.GetUsersOtherThanRoleID(roleID);
-
-                    var RolMappedList = (from MapRoles in mappedRoles
-                                         join users in usesDetails on MapRoles.LoginMid equals users.LoginMId
-                                         select users
-                                     ).Distinct().ToList();
-
-                    return Ok(RolMappedList);
-                }
-
-                return NoContent();
+                return Ok(RolMappedList);
             }
-            catch (Exception ex)
+            else if (Status == "Available")
             {
-                _logger.LogError($"Some error in the GetRoleMapUsers method: {ex}");
-                return StatusCode(500, "Internal server error");
+                var mappedRoles = await _repo.vsecUserRoleMap.GetUsersOtherThanRoleID(roleID);
+
+                var RolMappedList = (from MapRoles in mappedRoles
+                                        join users in usesDetails on MapRoles.LoginMid equals users.LoginMId
+                                        select users
+                                    ).Distinct().ToList();
+
+                return Ok(RolMappedList);
             }
+
+            return NoContent();
         }
 
         [HttpPost]
         public async Task<IActionResult> AllocateDeallocateRoles(IEnumerable<VsecUserRoleMap> vsecUserRoleMap)
         {
-            try
-            {   
-                await _repo.vsecUserRoleMap.CreateDeleteRoleMapping(vsecUserRoleMap);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Some error in the AllocateRoles method: {ex}");
-                return StatusCode(500, "Internal server error");
-            }
+            await _repo.vsecUserRoleMap.CreateDeleteRoleMapping(vsecUserRoleMap);
+            return NoContent();
         }
     }
 }
