@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Contracts;
 using Entities.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repository;
@@ -12,6 +13,7 @@ namespace EIAServer.Controllers.UserManagement
 {
     [Route("api/UserCreation")]
     [ApiController]
+    [Authorize]
     public class UserCreationController : ControllerBase
     {
         private ILoggerManager _logger;

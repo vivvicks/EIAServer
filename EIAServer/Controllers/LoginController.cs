@@ -60,7 +60,7 @@ namespace EIAServer.Controllers
 
                         var tokeOptions = new JwtSecurityToken(
                             issuer: "http://localhost:5000",
-                            audience: "http://localhost:5000",
+                            audience: "http://localhost:4200",
                             claims: claims,
                             expires: DateTime.Now.AddMinutes(5),
                             signingCredentials: signinCredentials

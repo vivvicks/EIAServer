@@ -17,5 +17,6 @@ namespace Contracts
         IRoleCreation roleCreation { get; }
         IVsecUserRoleMap vsecUserRoleMap { get; }
         IMFlightmasterMST mFlightmasterMst { get; }
+        IMCouriermst mCouriermst { get; }
     }
 }

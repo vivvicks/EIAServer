@@ -21,6 +21,7 @@ namespace Repository
         private IRoleCreation _roleCreation;
         private IVsecUserRoleMap _vsecUserRoleMap;
         private IMFlightmasterMST _mFlightmasterMST;
+        private IMCouriermst _mCouriermst;
 
         public RepositoryWrapper(EIA_DEVContext eIA_DEVContext)
         {
@@ -133,6 +134,19 @@ namespace Repository
                 }
 
                 return _mFlightmasterMST;
+            }
+        }
+
+        public IMCouriermst mCouriermst
+        {
+            get
+            {
+                if (_mCouriermst == null)
+                {
+                    _mCouriermst = new MCouriermasterMSTRepository(_eIA_DEVContext);
+                }
+
+                return _mCouriermst;
             }
         }
 

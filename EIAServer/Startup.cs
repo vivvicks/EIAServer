@@ -14,6 +14,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NLog;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace EIAServer
 {
@@ -30,6 +37,8 @@ namespace EIAServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwaggerDocumentation();
+
             services.ConfigureCors();
 
             services.ConfigureIISIntegration();
@@ -43,21 +52,55 @@ namespace EIAServer
             services.ConfigureJwt();
 
             services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerManager logger)
         {
+
+            app.UseSwaggerDocumentation();
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseHttpStatusCodeExceptionMiddleware();
+                app.UseDeveloperExceptionPage();                
             }
-            else
+            
+            app.UseHttpStatusCodeExceptionMiddleware();
+
+            app.UseExceptionHandler(appBuilder =>
             {
-                app.UseHttpStatusCodeExceptionMiddleware();
-                app.UseExceptionHandler();
-            }
+                appBuilder.Use(async (context, next) =>
+                {
+                    var error = context.Features[typeof(IExceptionHandlerFeature)] as IExceptionHandlerFeature;
+
+                    //when authorization has failed, should retrun a json message to client
+                    if (error != null && error.Error is SecurityTokenExpiredException)
+                    {
+                        context.Response.StatusCode = 401;
+                        context.Response.ContentType = "application/json";
+
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(new
+                        {
+                            State = "Unauthorized",
+                            Msg = "token expired"
+                        }));
+                    }
+                    //when orther error, retrun a error message json to client
+                    else if (error != null && error.Error != null)
+                    {
+                        context.Response.StatusCode = 500;
+                        context.Response.ContentType = "application/json";
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(new
+                        {
+                            State = "Internal Server Error",
+                            Msg = error.Error.Message
+                        }));
+                    }
+                    //when no error, do next.
+                    else await next();
+                });
+            });
 
             app.UseCors("CorsPolicy");
 
@@ -77,6 +120,7 @@ namespace EIAServer
                     await next();
                 }
             });
+            
             
             app.UseStaticFiles();
             app.UseAuthentication();

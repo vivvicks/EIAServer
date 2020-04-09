@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Contracts;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EIAServer.Controllers
 {
-    [Route("api/Utility")]
+    [Authorize]
+    [EnableCors("CorsPolicy")]
     [ApiController]
+    [Route("api/Utility")]
     public class UtilityController : ControllerBase
     {
         private ILoggerManager _logger;
@@ -21,7 +26,7 @@ namespace EIAServer.Controllers
             _repository = repository;
         }
 
-
+        
         [HttpGet(), Route("GetFinantialYear")]
         public async Task<IActionResult> GetFinantialYear()
         {
@@ -65,6 +70,20 @@ namespace EIAServer.Controllers
         {
             var flightLst = await _repository.mFlightmasterMst.GetFlightList(terminalCode, airlineCode, flightType);
             return Ok(flightLst);
+        }
+
+        [HttpGet(), Route("GetFlightDetails")]
+        public IActionResult GetFlightDetails(string FlightNumber, string TerminalCode)
+        {
+            var flightDetails =  _repository.mFlightmasterMst.GetFlightDetails(FlightNumber, TerminalCode);
+            return Ok(flightDetails);
+        }
+
+        [HttpGet(), Route("GetCourierLst")]
+        public async Task<IActionResult> GetCourierLst(string TerminalCode)
+        {
+            var courierLst = await _repository.mCouriermst.GetCourierList(TerminalCode);
+            return Ok(courierLst);
         }
 
     }
