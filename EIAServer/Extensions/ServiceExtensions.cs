@@ -68,13 +68,8 @@ namespace EIAServer.Extensions
             //        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
             //        .RequireAuthenticatedUser().Build());
             //});
-
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            services.AddAuthentication("Bearer")           
+           .AddJwtBearer("Bearer", options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -84,7 +79,7 @@ namespace EIAServer.Extensions
                     ValidateIssuerSigningKey = true,
 
                     ValidIssuer = "http://localhost:5000",
-                    ValidAudience = "http://localhost:4200/",
+                    ValidAudience = "http://localhost:4200",
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"))
                 };
             });

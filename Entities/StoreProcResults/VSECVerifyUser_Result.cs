@@ -35,5 +35,7 @@ namespace Entities.StoreProcResults
         public string Period { get; set; }
         public Nullable<int> PasswordRetry { get; set; }
         public Nullable<int> PwdRetryCount { get; set; }
+        public string TokenString { get; set; }
+
     }
 }

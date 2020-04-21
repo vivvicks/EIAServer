@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EIAServer.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [EnableCors("CorsPolicy")]
     [ApiController]
     [Route("api/Utility")]

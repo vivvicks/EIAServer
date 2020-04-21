@@ -66,9 +66,9 @@ namespace EIAServer.Controllers
                             signingCredentials: signinCredentials
                         );
 
-                        var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+                        userInfo[0].TokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
 
-                        return Ok(new { UserInfo = userInfo, TokenString = tokenString });
+                        return Ok(userInfo);
                     }
                     else
                     {
